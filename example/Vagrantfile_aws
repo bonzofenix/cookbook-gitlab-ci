@@ -1,0 +1,37 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "dummy"
+
+  config.vm.provider :aws do |aws, override|
+    aws.access_key_id = "YOUR_ACCESS_KEY"
+    aws.secret_access_key = "YOUR_SECRET_KEY"
+    aws.keypair_name = "vagrant"
+    aws.ami = "ami-7747d01e"
+    aws.security_groups = ["vagrant"]
+    aws.tags = {'Name' => 'GitLab-ci'}
+
+    # default is "m1.small".
+    # aws.instance_type = "t1.micro"
+
+    override.ssh.username = "ubuntu"
+    override.ssh.private_key_path = "~/.ssh/vagrant_aws.pem"
+  end
+
+  config.omnibus.chef_version = :latest
+  config.berkshelf.enabled = true
+
+  config.vm.provision :chef_solo do |chef|
+    chef.json = {
+       'postgresql' => {'password' => { 'postgres' => 'password' }},
+      'authorization'=> {'sudo' => { 'users' => ['gitlab_ci', 'vagrant'],
+                                     'passwordless' => true} },
+                                      "apt" => {"compiletime" => true} 
+    }
+    chef.run_list = [
+      "gitlab-ci::initial",
+      "gitlab-ci::default"
+    ]
+  end
+end

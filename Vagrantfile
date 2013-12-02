@@ -32,21 +32,15 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.json = {
+       'postgresql' => {'password' => { 'postgres' => 'password' }},
       'authorization'=> {'sudo' => { 'users' => ['gitlab_ci', 'vagrant'],
                                      'passwordless' => true} },
                                       "apt" => {"compiletime" => true} 
     }
 
     chef.run_list = [
-      "apt",
-      "sudo",
-      "build-essential",
-      "git",
-      "rbenv::default",
-      "rbenv::ruby_build",
-      "build-essential",
-      "postgresql::server",
-      "cookbook-gitlab-ci::default"
+      "gitlab-ci::initial",
+      "gitlab-ci::default"
     ]
   end
 end

@@ -79,8 +79,15 @@ bash 'setup_gitlab_ci_daemon' do
 end
 
 execute "sudo rbenv rehash"
-execute 'sudo -u gitlab_ci -H bundle exec rake db:setup RAILS_ENV=production'
-execute 'sudo -u gitlab_ci -H bundle exec whenever -w RAILS_ENV=production'
+
+execute 'sudo -u gitlab_ci -H bundle exec rake db:setup RAILS_ENV=production' do
+  cwd node['gitlab_ci']['app_home']
+end
+
+execute 'sudo -u gitlab_ci -H bundle exec whenever -w RAILS_ENV=production' do
+  cwd node['gitlab_ci']['app_home']
+end
+
 execute 'sudo service gitlab_ci start'
 
 # bash 'setup_nginx' do
