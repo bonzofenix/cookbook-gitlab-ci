@@ -1,7 +1,8 @@
 defaults: &defaults
-  allowed_gitlab_urls: 
-    - 'https://dev.gitlab.org/'
-    - 'https://staging.gitlab.org/'
+  allowed_gitlab_urls:
+  <%- @allowed_gitlab_urls.each do |url| %>
+    - <%= url %>
+  <%-end %>
   gitlab_ci:
     https: false
   gravatar:
@@ -15,7 +16,7 @@ development:
 
 test:
   <<: *defaults
-  allowed_gitlab_urls: 
+  allowed_gitlab_urls:
     - 'http://demo.gitlab.com/'
 
 production:

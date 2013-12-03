@@ -30,9 +30,9 @@ git node['gitlab_ci']['app_home'] do
 end
 
 template "#{node['gitlab_ci']['app_home']}/config/application.yml" do
-  source "application.yml.example"
+  source "application.yml.erb"
   mode "0644"
-  variables({ })
+  variables({allowed_gitlab_urls: node['gitlab_ci']['allow_gitlab_urls'] })
   user 'gitlab_ci'
 end
 
