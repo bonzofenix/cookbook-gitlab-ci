@@ -1,5 +1,4 @@
 
-
 Gitlab Ci runner cookbook
 =========================
 
@@ -51,7 +50,7 @@ $ cd ./gitlab-ci-runner-deployment/
 $ cp ./example/Vagrantfile_aws ./Vagrantfile
 # Edit Vagrant file now!
 $ vagrant up --provider=aws
-`
+```
 
 Usage
 =====
