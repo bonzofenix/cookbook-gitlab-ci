@@ -1,4 +1,3 @@
-
 Gitlab Ci runner cookbook
 =========================
 
@@ -59,6 +58,30 @@ Example of node config.
 
 ```json
 {
+    "authorization": {
+        "sudo": {
+            "users": [
+                "ubuntu",
+                "gitlab_ci_runner",
+                "vagrant"
+            ],
+            "passwordless": true
+        }
+    },
+    "gitlab_ci_runner": {
+        "gitlab_ci_url": "http://ec2-184-72-91-134.compute-1.amazonaws.com:9292",
+        "gitlab_host": "ec2-54-204-141-109.compute-1.amazonaws.com",
+        "gitlab_ci_token": "672ed80b57574b5b051a"
+    },
+    "rbenv": {
+        "group_users": [
+            "gitlab_ci_runner"
+        ]
+    },
+    "run_list": [
+        "gitlab-ci-runner::initial",
+        "gitlab-ci-runner::default"
+    ]
 }
 ```
 
