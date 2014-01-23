@@ -1,4 +1,4 @@
-Gitlab Ci runner cookbook
+Gitlab Ci cookbook
 =========================
 
 This is an opensource cookbook for [Gitlab Ci](https://github.com/gitlabhq/gitlab-ci-runner)
