@@ -10,9 +10,9 @@ rbenv_gem 'whenever' do
 end
 
 
-execute "sudo adduser --disabled-login --gecos 'GitLab CI' gitlab_ci" do
-  not_if 'id -u gitlab_ci'
-end
+# execute "sudo adduser --disabled-login --gecos 'GitLab CI' gitlab_ci" do
+  # not_if 'id -u gitlab_ci'
+# end
 
 cookbook_file '/tmp/initial.sql' do
   source 'initial.sql'
