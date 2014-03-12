@@ -32,9 +32,9 @@ Vagrant.configure("2") do |config|
   config.vm.provision :chef_solo do |chef|
     chef.json = {
        'postgresql' => {'password' => { 'postgres' => 'password' }},
-      'authorization'=> {'sudo' => { 'users' => ['gitlab_ci', 'vagrant'],
+      'authorization'=> {'sudo' => { 'users' => ['ubuntu', 'gitlab_ci', 'vagrant'],
                                      'passwordless' => true} },
-                                      "apt" => {"compiletime" => true},
+                                      "apt" => {"compiletime" => true} ,
       'gitlab_ci' =>{
         'allow_gitlab_urls' => [
           'http://33.33.33.10',

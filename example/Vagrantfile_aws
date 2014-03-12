@@ -31,7 +31,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :chef_solo do |chef|
     chef.json = {
        'postgresql' => {'password' => { 'postgres' => 'password' }},
-      'authorization'=> {'sudo' => { 'users' => ['gitlab_ci', 'vagrant'],
+      'authorization'=> {'sudo' => { 'users' => ['ubuntu', 'gitlab_ci_runner', 'vagrant'],
                                      'passwordless' => true} },
                                       "apt" => {"compiletime" => true} ,
       'gitlab_ci' =>{
