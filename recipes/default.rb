@@ -1,3 +1,5 @@
+include_recipe "gitlab-ci::nginx"
+
 rbenv_ruby '2.0.0-p247' do
   global true
 end
@@ -88,14 +90,15 @@ execute 'sudo -u gitlab_ci -H bundle exec whenever -w RAILS_ENV=production' do
   cwd node['gitlab_ci']['app_home']
 end
 
-execute 'sudo service gitlab_ci start'
 
-# bash 'setup_nginx' do
-  # code <<-EOH
-    # sudo apt-get install nginx
-    # sudo cp /home/gitlab_ci/gitlab-ci/lib/support/nginx/gitlab_ci /etc/nginx/sites-available/gitlab_ci
-    # sudo ln -s /etc/nginx/sites-available/gitlab_ci /etc/nginx/sites-enabled/gitlab_ci
-         # EOH
-   # not_if { 'which nginx' }
-   # user 'gitlab_ci'
-# end
+bash 'setup_nginx' do
+  code <<-EOH
+    sudo apt-get install nginx
+    sudo cp /home/gitlab_ci/gitlab-ci/lib/support/nginx/gitlab_ci /etc/nginx/sites-available/gitlab_ci
+    sudo ln -s /etc/nginx/sites-available/gitlab_ci /etc/nginx/sites-enabled/gitlab_ci
+         EOH
+   not_if { 'which nginx' }
+   user 'gitlab_ci'
+end
+
+execute 'sudo service gitlab_ci start'
